@@ -1,4 +1,4 @@
-﻿// All content & tuning lives here — edit freely.
+// All content & tuning lives here — edit freely.
 
 // Brand palette (Notion "Packaging & Stickers")
 export const BRAND = {
@@ -11,11 +11,11 @@ export const BRAND = {
 // Real models: drop .glb files into /public/models and set the paths.
 // null = use primitive placeholders. See README.md for naming/scale conventions.
 export const MODELS = {
-  jar: '/models/jar.glb', // (previous version) Re_ME_Line.blend → Jar_Jelly_60p_15 (nodes Body, Lid, Label)
+  jar: 'models/jar.glb', // (previous version) Re_ME_Line.blend → Jar_Jelly_60p_15 (nodes Body, Lid, Label)
   // zip pouch from reme-four-pouches.blend → "03 • Front hero" (nodes Body + Strip = tear-off top)
-  pouch: '/models/pouch_L2.glb', // 46k + 10k tris (subdiv 2)
-  pouchLite: '/models/pouch_L1.glb', // 11k + 2.5k tris (subdiv 1) — phones
-  gummy: null, // e.g. '/models/gummy.glb' (first mesh is used, instanced)
+  pouch: 'models/pouch_L2.glb', // 46k + 10k tris (subdiv 2)
+  pouchLite: 'models/pouch_L1.glb', // 11k + 2.5k tris (subdiv 1) — phones
+  gummy: null, // e.g. 'models/gummy.glb' (first mesh is used, instanced)
 };
 
 export const OPEN_TAPS = 3; // fallback: taps needed to rip the strip (main gesture: swipe along the top edge)

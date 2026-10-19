@@ -1,4 +1,4 @@
-﻿import * as THREE from 'three';
+import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 // Stand-up zip pouch. Exported from reme-four-pouches.blend → "03 • Front hero", cut just under the
@@ -9,7 +9,7 @@ const BASE_Y = -1.5;
 const MOUTH_DEPTH = 1.0; // how far down from the cut the mouth flares open
 const MOUTH_OPEN = 0.34; // how far each wall bows out when fully open
 // Crumpled-foil normal map (ambientCG Foil001, CC0) — soft creases on the film, stronger on the foil
-const WRINKLES = '/textures/foil001_normal.jpg';
+const WRINKLES = 'textures/foil001_normal.jpg';
 
 export async function createPouch(url) {
   const gltf = await new GLTFLoader().loadAsync(url);

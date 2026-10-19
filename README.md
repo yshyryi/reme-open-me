@@ -1,4 +1,4 @@
-﻿# Re:Me — "Open me" WebGL jar
+# Re:Me — "Open me" WebGL jar
 
 Three.js + Vite. Swipe along the zip pouch's top edge (or tap 3× — `OPEN_TAPS`) → the tear strip rips off, the mouth pops open with a flash →
 gummies burst out → slow-mo → they hang in the air with infographic call-outs.

@@ -1,4 +1,4 @@
-﻿import * as THREE from 'three';
+import * as THREE from 'three';
 import { BRAND } from './data.js';
 
 // Opening FX: hot flash at the mouth, shockwave ring, sugar sparkles that hang in slow-mo.

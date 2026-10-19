@@ -1,4 +1,4 @@
-﻿import * as THREE from 'three';
+import * as THREE from 'three';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { BokehPass } from 'three/addons/postprocessing/BokehPass.js';
@@ -424,6 +424,8 @@ async function main() {
   const clock = new THREE.Clock();
   // FPS HUD: average fps + worst frame over the last half second, render size
   const fpsEl = document.querySelector('#fps');
+  // perf HUD: always in dev, on the public build only with ?fps in the URL
+  if (!import.meta.env.DEV && !new URLSearchParams(location.search).has('fps')) fpsEl.style.display = 'none';
   let fpsFrames = 0, fpsTime = 0, fpsWorst = 0, frameTris = 0, frameCalls = 0;
   renderer.info.autoReset = false;
   function fpsTick(raw) {

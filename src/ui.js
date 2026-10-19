@@ -1,4 +1,4 @@
-﻿// DOM overlay: "Open me" text ring, tap progress bar, infographic cards glued to their gummies.
+// DOM overlay: "Open me" text ring, tap progress bar, infographic cards glued to their gummies.
 
 // Preferred screen regions for the initial card → gummy assignment (same order as CARDS)
 const SLOTS_LANDSCAPE = [[0.13, 0.2], [0.13, 0.5], [0.13, 0.8], [0.87, 0.2], [0.87, 0.5], [0.87, 0.8]];
