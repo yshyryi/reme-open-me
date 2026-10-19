@@ -1,0 +1,571 @@
+﻿/* Brand fonts: replace the Google placeholders with Denim INK, e.g.
+@font-face { font-family: 'Denim INK'; src: url('/fonts/DenimINK-Bold.woff2') format('woff2'); font-weight: 700; }
+and set --display: 'Denim INK' below. */
+
+:root {
+  --orange: #ff7500;
+  --beige: #f2ebe7;
+  --gray: #a69d9c;
+  --ink: #382d2e;
+  --bg: #2a2122;
+  --display: 'Manrope', system-ui, sans-serif;
+  --text: 'Manrope', system-ui, sans-serif;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+  background: radial-gradient(120% 90% at 50% 40%, #4a3b3c 0%, var(--ink) 45%, var(--bg) 100%) fixed;
+  color: var(--beige);
+  font-family: var(--text);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#scene {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  display: block;
+  touch-action: none;
+  cursor: grab;
+}
+#scene:active {
+  cursor: grabbing;
+}
+
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+}
+
+header {
+  position: fixed;
+  top: max(16px, env(safe-area-inset-top));
+  left: 16px;
+  right: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  pointer-events: none;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo .mark {
+  height: 18px;
+}
+.logo .word {
+  height: 22px;
+}
+.logo small {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--text);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+#replay {
+  pointer-events: auto;
+  font: 600 13px var(--text);
+  color: var(--ink);
+  background: var(--beige);
+  border: 0;
+  border-radius: 99px;
+  padding: 10px 16px;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s, visibility 0.4s;
+}
+.revealed #replay {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0.8s;
+}
+
+/* ---- Open me ring ---- */
+#ring {
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow: visible;
+  pointer-events: none;
+  transition: opacity 0.35s;
+}
+#ring .track {
+  fill: none;
+  stroke: rgba(242, 235, 231, 0.16);
+  stroke-width: 1.5;
+}
+#ring .progress {
+  fill: none;
+  stroke: var(--orange);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transform: rotate(-90deg);
+  transition: stroke-dashoffset 0.45s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+#ring .track,
+#ring .progress,
+#ring .spin {
+  transform-box: view-box;
+}
+#ring.bump .track,
+#ring.bump text {
+  animation: bump 0.35s cubic-bezier(0.3, 1.8, 0.5, 1);
+}
+@keyframes bump {
+  30% {
+    transform: scale(1.08);
+  }
+}
+#flash {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(60% 50% at 50% 45%, rgba(255, 190, 120, 0.6), rgba(255, 117, 0, 0.25) 45%, rgba(255, 117, 0, 0) 75%);
+  mix-blend-mode: screen;
+}
+#flash.go {
+  animation: flash 0.7s ease-out;
+}
+@keyframes flash {
+  0% {
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+#ring text {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 12px;
+  fill: var(--beige);
+}
+#ring .spin {
+  animation: spin 16s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#hint {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: max(28px, env(safe-area-inset-bottom));
+  text-align: center;
+  font-weight: 600;
+  font-size: 14px;
+  pointer-events: none;
+  transition: opacity 0.35s;
+}
+#hint span {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+/* ---- Infographics ---- */
+#lines {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.revealed #lines {
+  opacity: 1;
+  transition: opacity 0.8s 0.3s;
+}
+#lines line {
+  stroke: rgba(242, 235, 231, 0.6);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+#lines .dot {
+  fill: var(--beige);
+}
+#lines .halo {
+  fill: none;
+  stroke: var(--orange);
+  stroke-width: 1.5;
+}
+
+.card {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 200px;
+  pointer-events: none;
+  visibility: hidden;
+}
+.revealed .card {
+  visibility: visible;
+}
+.card .in {
+  background: rgba(42, 33, 34, 0.62);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(242, 235, 231, 0.14);
+  border-radius: 14px;
+  padding: 12px 14px;
+  opacity: 0;
+  transform: translateY(12px) scale(0.96);
+  transition: opacity 0.25s, transform 0.25s;
+}
+.revealed .card .in {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.5s ease var(--d), transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d);
+}
+.kicker {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 6px;
+}
+.title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 17px;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+.sw {
+  width: 16px;
+  height: 16px;
+  border-radius: 5px;
+  flex: none;
+}
+.hex {
+  font: 600 10px ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: var(--gray);
+  margin: 3px 0 0 24px;
+}
+.big {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 38px;
+  line-height: 1;
+  color: var(--orange);
+}
+.big span {
+  font-family: var(--text);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--beige);
+  margin-left: 6px;
+}
+.body {
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.35;
+  font-weight: 500;
+}
+.bars {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+.bars li {
+  display: grid;
+  grid-template-columns: 70px 1fr 50px;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.bars b {
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(242, 235, 231, 0.12);
+  overflow: hidden;
+}
+.bars i {
+  display: block;
+  height: 100%;
+  min-width: 2px;
+  background: var(--orange);
+}
+.bars em {
+  font-style: normal;
+  text-align: right;
+}
+
+@media (max-aspect-ratio: 9/10) {
+  .card {
+    width: min(42vw, 170px);
+  }
+  .card .in {
+    padding: 8px 10px;
+    border-radius: 12px;
+  }
+  .kicker {
+    font-size: 8px;
+    margin-bottom: 4px;
+  }
+  .title {
+    font-size: 13px;
+  }
+  .sw {
+    width: 12px;
+    height: 12px;
+    border-radius: 4px;
+  }
+  .hex {
+    display: none;
+  }
+  .big {
+    font-size: 24px;
+  }
+  .big span {
+    font-size: 11px;
+    margin-left: 4px;
+  }
+  .body {
+    margin-top: 4px;
+    font-size: 10px;
+  }
+  .bars li {
+    grid-template-columns: 1fr 34px;
+    font-size: 9.5px;
+    gap: 2px 6px;
+  }
+  .bars b {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+
+#loader {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: var(--bg);
+  transition: opacity 0.6s;
+}
+#loader img {
+  width: 140px;
+}
+#loader.done {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ---- tap progress (under the hint) ---- */
+#bar {
+  display: flex;
+  gap: 6px;
+  width: 132px;
+  margin: 12px auto 0;
+}
+#bar i {
+  flex: 1;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(242, 235, 231, 0.18);
+  overflow: hidden;
+  position: relative;
+}
+#bar i::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--orange);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+#bar i.on::after {
+  transform: scaleX(1);
+}
+#bar.bump {
+  animation: barBump 0.35s cubic-bezier(0.3, 1.8, 0.5, 1);
+}
+@keyframes barBump {
+  30% {
+    transform: scaleY(1.8);
+  }
+}
+
+/* card hops onto a newly tapped gummy */
+.revealed .card.pop .in {
+  animation: pop 0.45s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+@keyframes pop {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.3;
+  }
+}
+/* ---- compact cards (phones) ---- */
+.card .c {
+  display: none;
+}
+@media (max-aspect-ratio: 9/10) {
+  .revealed .card {
+    width: max-content;
+    max-width: 46vw;
+    pointer-events: auto;
+    cursor: pointer;
+  }
+  .card .f {
+    display: none;
+  }
+  .card .c {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .card .c b {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .card .c .sw {
+    width: 9px;
+    height: 9px;
+    border-radius: 3px;
+  }
+  .card .c span {
+    font-size: 9.5px;
+    font-weight: 600;
+    color: rgba(242, 235, 231, 0.62);
+    white-space: nowrap;
+  }
+  .card .c span::after {
+    content: ' +';
+    color: var(--orange);
+  }
+  /* see-through glass pill so the gummies stay visible behind */
+  .card .in {
+    padding: 6px 10px 7px;
+    border-radius: 10px;
+    background: rgba(42, 33, 34, 0.34);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    border-color: rgba(242, 235, 231, 0.1);
+  }
+  /* tapped → full card */
+  .revealed .card.open {
+    width: min(62vw, 230px);
+    max-width: none;
+    z-index: 2;
+  }
+  .card.open .in {
+    padding: 9px 11px;
+    background: rgba(42, 33, 34, 0.78);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+  .card.open .f {
+    display: block;
+  }
+  .card.open .c {
+    display: none;
+  }
+}
+/* perf HUD */
+#fps {
+  position: fixed;
+  left: 50%;
+  top: max(10px, env(safe-area-inset-top));
+  transform: translateX(-50%);
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #9f9;
+  font: 600 10px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
+  white-space: pre;
+  pointer-events: none;
+  z-index: 10;
+}
+#fps.warn {
+  color: #fd6;
+}
+#fps.bad {
+  color: #f77;
+}
+/* phone profile: no backdrop blur (expensive compositor work), no full-screen grain layer */
+.lite .grain {
+  display: none;
+}
+.lite .card .in,
+.lite .card.open .in {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.lite .card .in {
+  background: rgba(42, 33, 34, 0.5);
+}
+.lite .card.open .in {
+  background: rgba(42, 33, 34, 0.9);
+}
+/* tear guide along the pouch's top strip */
+#tear {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+#tear .track {
+  stroke: rgba(242, 235, 231, 0.55);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 5;
+}
+#tear .done {
+  stroke: var(--orange);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+#tear .dot {
+  fill: var(--orange);
+  filter: drop-shadow(0 0 6px rgba(255, 117, 0, 0.8));
+}
+#ring {
+  display: none;
+}

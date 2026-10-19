@@ -1,0 +1,48 @@
+﻿<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+    <meta name="theme-color" content="#2A2122" />
+    <title>Re:Me — Open me</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Placeholder fonts. Swap for Denim INK via @font-face in src/style.css -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <canvas id="scene"></canvas>
+    <div class="grain"></div>
+
+    <header>
+      <div class="logo"><img class="mark" src="/logo-icon.png" alt="" /><img class="word" src="/logo-wordmark.png" alt="Re:Me" /></div>
+      <button id="replay" type="button" aria-label="Replay">↻ Ще раз</button>
+    </header>
+
+    <svg id="ring" viewBox="-100 -100 200 200" aria-hidden="true">
+      <defs>
+        <path id="ringTextPath" d="M 0,-92 a 92,92 0 1,1 0,184 a 92,92 0 1,1 0,-184" />
+      </defs>
+      <g class="spin">
+        <text><textPath href="#ringTextPath" textLength="576" lengthAdjust="spacing">OPEN ME • TAP × 3 • OPEN ME • TAP × 3 •</textPath></text>
+      </g>
+    </svg>
+
+    <svg id="tear" aria-hidden="true">
+      <line class="track" />
+      <line class="done" />
+      <circle class="dot" r="6" />
+    </svg>
+
+    <div id="hint">Проведи пальцем по верхньому краю<span>або тапни 3 рази</span><div id="bar"></div></div>
+
+    <div id="flash"></div>
+    <svg id="lines"></svg>
+    <div id="cards"></div>
+
+    <div id="fps"></div>
+    <div id="loader"><img src="/logo-wordmark.png" alt="Re:Me" /></div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
