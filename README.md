@@ -10,6 +10,8 @@ npm install
 npm run dev        # http://localhost:5173 and http://<your-LAN-IP>:5173 for the phone
 ```
 
+**Live:** https://yshyryi.github.io/reme-open-me/ (add `?fps` for the perf HUD). Update it with `npm run deploy` — builds and force-pushes `dist` to the `gh-pages` branch.
+
 Production build: `npm run build && npm run preview` → port 4173 (also on LAN).
 If the phone can't connect, allow Node.js through Windows Firewall (Private networks).
 
