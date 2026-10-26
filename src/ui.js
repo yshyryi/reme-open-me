@@ -65,14 +65,17 @@ export function createUI(cards, steps) {
     Math.max(0, Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y));
 
   // Pick the side of its gummy where the card fits best: inside the screen,
-  // not over other cards or other anchored gummies; sticky to avoid flicker.
-  function place(it, a, placed, anchors) {
+  // not over other cards, other anchored gummies or the product (obstacles); sticky to avoid flicker.
+  function place(it, a, placed, anchors, obstacles = []) {
     const W = innerWidth, H = innerHeight, gap = 26, lift = 16;
     const cands = {
       r: { x: a.x + gap, y: a.y - it.h / 2 - lift },
       l: { x: a.x - gap - it.w, y: a.y - it.h / 2 - lift },
       t: { x: a.x - it.w / 2, y: a.y - gap - it.h },
       b: { x: a.x - it.w / 2, y: a.y + gap },
+      // further out — lets a card anchored on the product step off it
+      rr: { x: a.x + gap + it.w * 0.6, y: a.y - it.h / 2 - lift },
+      ll: { x: a.x - gap - it.w * 1.6, y: a.y - it.h / 2 - lift },
     };
     let best = null;
     for (const side in cands) {
@@ -82,6 +85,7 @@ export function createUI(cards, steps) {
       const r = { x, y, w: it.w, h: it.h };
       let score = Math.hypot(x - c.x, y - c.y) * 3; // had to be pushed inside the screen
       for (const p of placed) score += overlap(r, p) * 0.05;
+      for (const o of obstacles) score += overlap(r, o) * 0.07; // don't hide the pouch
       for (const o of anchors)
         if (o !== a && o.x > x - 10 && o.x < x + it.w + 10 && o.y > y - 10 && o.y < y + it.h + 10) score += 60;
       if (a.x > x - 6 && a.x < x + it.w + 6 && a.y > y - 6 && a.y < y + it.h + 6) score += 400; // covers its own gummy
@@ -161,13 +165,13 @@ export function createUI(cards, steps) {
     },
 
     // anchors: [{x, y}] in screen px, one per card
-    layout(anchors, dt) {
+    layout(anchors, dt, obstacles = []) {
       const W = innerWidth, H = innerHeight;
       const k = 1 - Math.exp(-dt * 9);
       // 1) best side per card
       const placed = [];
       const targets = items.map((it, i) => {
-        const t = place(it, anchors[i], placed, anchors);
+        const t = place(it, anchors[i], placed, anchors, obstacles);
         const r = { x: t.x, y: t.y, w: it.w, h: it.h };
         placed.push(r);
         return r;

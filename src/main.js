@@ -409,6 +409,18 @@ async function main() {
 
   if (import.meta.env.DEV) window.__reme = { scene, jar, camera, gummies, anchors: () => anchors, toScreen, composer, bokeh, renderer, dbg: () => ({ state, tear, tearGoal, taps }) };
 
+  // the pouch's on-screen bounding box (cards try not to sit on it)
+  const _corner = new THREE.Vector3();
+  function pouchScreenRect() {
+    let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+    for (const sx of [-1, 1]) for (const sy of [0, 1]) for (const sz of [-1, 1]) {
+      jar.spin.localToWorld(_corner.set(sx * jar.halfW, sy ? jar.rimY : jar.baseY, sz * jar.halfD));
+      const s = toScreen(_corner);
+      x0 = Math.min(x0, s.x); x1 = Math.max(x1, s.x); y0 = Math.min(y0, s.y); y1 = Math.max(y1, s.y);
+    }
+    return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 };
+  }
+
   // ---------- resize ----------
   function resize() {
     renderer.setSize(innerWidth, innerHeight, false);
@@ -554,7 +566,7 @@ async function main() {
       const points = anchors.map((a) =>
         toScreen(a.type === 'jar' ? jar.labelAnchor.getWorldPosition(tmp) : gummies.worldPosition(a.i, tmp)),
       );
-      ui.layout(points, dt);
+      ui.layout(points, dt, [pouchScreenRect()]);
     }
 
     // depth of field: focus on the jar in the close-up, on the middle of the cloud once open

@@ -232,9 +232,7 @@ header {
   visibility: visible;
 }
 .card .in {
-  background: rgba(42, 33, 34, 0.62);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  background: rgba(42, 33, 34, 0.82); /* no backdrop blur: it smeared the pouch under the cards */
   border: 1px solid rgba(242, 235, 231, 0.14);
   border-radius: 14px;
   padding: 12px 14px;
@@ -483,9 +481,7 @@ header {
   .card .in {
     padding: 6px 10px 7px;
     border-radius: 10px;
-    background: rgba(42, 33, 34, 0.34);
-    -webkit-backdrop-filter: blur(6px);
-    backdrop-filter: blur(6px);
+    background: rgba(42, 33, 34, 0.5);
     border-color: rgba(242, 235, 231, 0.1);
   }
   /* tapped → full card */
@@ -496,9 +492,7 @@ header {
   }
   .card.open .in {
     padding: 9px 11px;
-    background: rgba(42, 33, 34, 0.78);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
+    background: rgba(42, 33, 34, 0.9);
   }
   .card.open .f {
     display: block;
